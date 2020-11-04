@@ -1,5 +1,5 @@
 <template>
-<div class='contacts' v-on:load="getContacts">
+<div class='contacts' v-show="contacts">
   <!--search bar-->
         <div class="ui search">
           <div class="ui icon input">
@@ -10,25 +10,25 @@
         </div>
         <!--search bar-->
     <div class="ui cards">
-       <div class="card">
+       <div class="card" v-for="contact in contacts" :key="contact">
         <div class="content">
            <i class="user icon right floated"></i>
           <div class="header">
-            Elliot Fu
+            {contact.name}
           </div>
           <div class="meta">
-            Friends of Veronika
+            {contact.type}
           </div>
           <div class="description">
             Elliot requested permission to view your contact details
-            <div><i class="mobile alternate icon"></i>0415236985</div>
-        <div><i class="mail icon"></i> fu@gmail.com</div>
+            <div><i class="mobile alternate icon"></i>{contact.phone}</div>
+        <div><i class="mail icon"></i> {contact.email}</div>
           </div>
         </div>
         <div class="extra content">
           <div class="ui two buttons">
             <div class="ui basic blue button">
-              <i class="pencil icon"></i>0
+              <i class="pencil icon"></i>
               Update</div>
             <div class="ui basic red button">
               <i class="trash alternate icon"></i> Delete</div>
@@ -79,7 +79,7 @@ export default {
                 method:"GET",   
                 mode: 'cors',
                 headers: {
-                    "x-auth-token": token
+                    'x-auth-token': token
                 }
             })
             .then(response => response.json())
@@ -92,14 +92,14 @@ export default {
     }
 }
 </script>
-<style scoped>
+<style scoped >
 .ui .search {
   margin : 10px;
 }
-.ui .cards{
+.ui .cards {
 margin : 10px;
 }
 #i{
   color: blue;
 }
-</style>::;::|;;
+</style>

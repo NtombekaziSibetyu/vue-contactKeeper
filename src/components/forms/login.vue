@@ -57,7 +57,7 @@ export default {
             .then(response => response.json())
                 .then(json => {
                   console.log('json->', json);
-                  window.localStorage.removeItem(json.token)
+                  window.localStorage.removeItem('token',json.token)
                   window.localStorage.setItem( 'token',json.token)
                   this.$router.push('/user')
                 }

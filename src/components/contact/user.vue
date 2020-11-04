@@ -23,7 +23,9 @@
             </span>
           </div>
         </div>
-      <sui-button circular color="teal" @click.native="toggle"></sui-button>
+      <sui-button circular color="teal" @click.native="toggle">
+        create
+      </sui-button>
       <sui-modal v-model="open">
         <form class="ui form">
                <h1>Create new contact</h1>
