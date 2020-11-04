@@ -5,5 +5,5 @@ import userContacts from '../components/contact/main.vue'
 export default [
     { path : "/", component : landing},
     { path : "/sign-in", component : forms},
-    { path :"/:id", component: userContacts}
+    { path :"/user", component: userContacts}
 ]

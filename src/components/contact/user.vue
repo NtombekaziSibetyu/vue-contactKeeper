@@ -23,34 +23,26 @@
             </span>
           </div>
         </div>
-        <div class="ui circular blue animated button right floated" tabindex="0" @click.native="toggle">
-          <div class="hidden content"  v-on:click="create">Create</div>
-          <div class="visible content">
-            <i class="plus icon"></i>
-          </div>
-          
-      </div>
-      <sui-button @click.native="toggle">Show Modal</sui-button>
+      <sui-button circular color="teal" @click.native="toggle"></sui-button>
       <sui-modal v-model="open">
         <form class="ui form">
                <h1>Create new contact</h1>
                 <div class="required field">
                     <label>Full Name</label>
-                    <input type="text" name="first-name" placeholder="First Name">
+                    <input v-model="name" type="text" name="name" placeholder="Name">
                 </div>
                 <div class="required field">
                     <label>Email</label>
-                    <input type="email" name="first-name" placeholder="you@example.com">
+                    <input v-model="name"  type="email" name="first-name" placeholder="you@example.com">
                 </div>
                 <div class="required field">
                     <label>Phone</label>
-                    <input type="text" name="first-name" placeholder="+27123456789">
+                    <input v-model="name" type="text" name="first-name" placeholder="+27123456789">
                 </div>
         
                     <div class="field">
                             <label>Type</label>
-                            <input type="text" name="professional" placeholder="personal /professional">
-    
+                            <input v-model="name" type="text" name="professional" placeholder="personal /professional">
                     </div>
                 <button class="ui positive  button" type="submit">Save</button>
             </form>
@@ -63,12 +55,14 @@
 export default {
   name: 'user',
   data() {
-    return { open: false };
+    return { open: false ,
+    };
   },
   methods: {
     toggle() {
       this.open = !this.open;
     },
+    
   },
 };
 </script>

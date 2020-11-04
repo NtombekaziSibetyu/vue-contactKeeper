@@ -1,5 +1,5 @@
 <template>
-<div class='contacts'>
+<div class='contacts' v-on:load="getContacts">
   <!--search bar-->
         <div class="ui search">
           <div class="ui icon input">
@@ -65,7 +65,31 @@
 </template>
 <script>
 export default {
-    name: 'contacts'
+    name: 'contacts',
+    data : ()=> {
+      return {
+        contacts : []
+      }
+    },
+    methods : {
+      getContacts : function() {
+      let URL = "https://contacts-keeper-app2.herokuapp.com/api/contacts";
+            let token = window.localStorage.getItem('token')
+            fetch(URL, {
+                method:"GET",   
+                mode: 'cors',
+                headers: {
+                    "x-auth-token": token
+                }
+            })
+            .then(response => response.json())
+                .then(json => {
+                    console.log('json->', json );
+                    this.contacts = json
+                })
+                .catch(err => console.log('err->',err))
+    }
+    }
 }
 </script>
 <style scoped>
@@ -78,4 +102,4 @@ margin : 10px;
 #i{
   color: blue;
 }
-</style>
+</style>::;::|;;

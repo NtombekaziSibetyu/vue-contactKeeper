@@ -4,7 +4,6 @@
       <div class="ui two column very relaxed stackable grid">
         <div class="column">
           <user></user>
-          <new-contact></new-contact>
         </div>
         <div class="middle aligned column">
           <contacts></contacts>
@@ -17,14 +16,12 @@
 
 <script>
 import user from './user.vue'
-import newContact from '../forms/newContact'
 import contacts from './contacts.vue'
 export default {
   name: 'userContacts',
   components : {
     'user' : user,
-    'contacts': contacts,
-    'new-contact' : newContact
+    'contacts': contacts
   }
 }
 </script>
