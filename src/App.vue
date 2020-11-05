@@ -31,5 +31,6 @@ template{
   margin: 10 auto;
   background: #2c3e50;
   background-size: cover;
+  height: 100%;
 }
 </style>

@@ -60,6 +60,7 @@ export default {
                   window.localStorage.removeItem('token',json.token)
                   window.localStorage.setItem( 'token',json.token)
                   this.$router.push('/user')
+                  
                 }
                 )
                 .catch(err => console.log('err->',err))

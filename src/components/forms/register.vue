@@ -83,7 +83,7 @@ export default {
                     console.log('json->', json);
                     this.$router.push('/user')
                 })
-                .catch(err => console.log('err->',err))
+              .catch(err => console.log('err->',err))
         }
 
 

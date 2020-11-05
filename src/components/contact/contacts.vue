@@ -1,77 +1,78 @@
 <template>
-<div class='contacts' v-show="contacts">
-  <!--search bar-->
-        <div class="ui search">
-          <div class="ui icon input">
-            <input class="prompt" type="text" placeholder="search...">
-            <i class="search icon"></i>
+<div class='contacts' >
+  <div class="inline fields">
+        <sui-button class="right floated" color="green" v-on:click="logOut"> Sign-out</sui-button>
+  </div>
+    <div class="ui cards" >
+       <div class="card" v-for="(person,index) in contacts" :key="index">    
+          <div class="content">
+            <i class="user icon right floated"></i>
+            <div class="header">
+              {{ person.name }}
+            </div>
+            <div class="meta">
+              {{ person.type }}
+            </div>
+            <div class="description">
+              Elliot requested permission to view your person details
+              <div><i class="mobile alternate icon"></i>{{ person.phone }}</div>
+          <div><i class="mail icon"></i> {{ person.email }}</div>
+            </div>
           </div>
-          <div class="results"></div>
-        </div>
-        <!--search bar-->
-    <div class="ui cards">
-       <div class="card" v-for="contact in contacts" :key="contact">
-        <div class="content">
-           <i class="user icon right floated"></i>
-          <div class="header">
-            {contact.name}
+          <div class="extra content">
+            <div class="ui two buttons">
+              <sui-button class="ui basic blue button" @click.native="toggle">
+                <i class="pencil icon"></i>
+                Update</sui-button>
+              <div class="ui basic red button" v-on:click="deleteContact">
+                <i class="trash alternate icon"></i> Delete</div>
+            </div>
           </div>
-          <div class="meta">
-            {contact.type}
-          </div>
-          <div class="description">
-            Elliot requested permission to view your contact details
-            <div><i class="mobile alternate icon"></i>{contact.phone}</div>
-        <div><i class="mail icon"></i> {contact.email}</div>
-          </div>
-        </div>
-        <div class="extra content">
-          <div class="ui two buttons">
-            <div class="ui basic blue button">
-              <i class="pencil icon"></i>
-              Update</div>
-            <div class="ui basic red button">
-              <i class="trash alternate icon"></i> Delete</div>
-          </div>
-        </div>
       </div>
-
-      <div class="card">
-    <div class="content">
-     <i class="user icon right floated"></i>
-      <div class="header">
-        Elliot Fu
-      </div>
-      <div class="meta">
-        Friends of Veronika
-      </div>
-      <div class="description">
-        Elliot requested permission to view your contact details
-        <div><i class="mobile alternate icon"></i> 0114445668</div>
-        <div><i class="mail icon">fu@gmail.com</i></div>
-      </div>
-    </div>
-    <div class="extra content">
-      <div class="ui two buttons">
-        <div class="ui basic blue button">Update</div>
-        <div class="ui basic red button">Delete</div>
-      </div>
-    </div>
-  </div> 
-    <div> 
+  <div> 
 </div>
+  <sui-modal v-model="open">
+        <form class="ui form">
+                <div class=" field">
+                    <label>Full Name</label>
+                    <input v-model="contact.name" type="text" name="name" placeholder="Name">
+                </div>
+                <div class="field">
+                    <label>Email</label>
+                    <input v-model="contact.email"  type="email" name="first-name" placeholder="you@example.com">
+                </div>
+                <div class="field">
+                    <label>Phone</label>
+                    <input v-model="contact.phone" type="text" name="first-name" placeholder="+27123456789">
+                </div>
+                    <div class="field">
+                            <label>Type</label>
+                            <input v-model="contact.type" type="text" name="professional" placeholder="personal /professional">
+                    </div>
+                <button class="ui positive  button" type="button" v-on:click="updateContact">Save</button>
+            </form>
+            
+      </sui-modal>
 </div>
 </div>
 </template>
 <script>
 export default {
     name: 'contacts',
-    data : ()=> {
+    data : () => {
       return {
-        contacts : []
+        open : false,
+        contacts : [],
+        contact: {name : "",
+      phone : "",
+      email : "",
+      type : ""}
       }
     },
     methods : {
+       toggle() {
+      this.open = !this.open;
+    },
       getContacts : function() {
       let URL = "https://contacts-keeper-app2.herokuapp.com/api/contacts";
             let token = window.localStorage.getItem('token')
@@ -79,16 +80,68 @@ export default {
                 method:"GET",   
                 mode: 'cors',
                 headers: {
-                    'x-auth-token': token
+                    'Content-Type': 'application/json',
+                    "x-auth-token": token
                 }
             })
             .then(response => response.json())
                 .then(json => {
-                    console.log('json->', json );
-                    this.contacts = json
+                    this.contacts = json;
+                    console.log( 'your contacts', JSON.stringify(json));
                 })
                 .catch(err => console.log('err->',err))
-    }
+      },
+      updateContact : function(_id) {
+        let URL = `https://contacts-keeper-app2.herokuapp.com/api/contacts/${_id}`;
+        let token = window.localStorage.getItem('token')
+        let _data = this.contact
+              fetch(URL, {
+                method:"PUT",  
+                body:  JSON.stringify(_data), 
+                mode: 'cors',
+                headers: {
+                      'Content-Type': 'application/json',
+                      "x-auth-token": token
+                  }
+              })
+             .then(response => {response.json()} )
+                 .then(json => {
+                     console.log('json->', json );
+                 })
+                .catch(err => console.log('err->',err))
+    },
+    // 
+    // 
+      deleteContact : function(_id){
+            let URL = `https://contacts-keeper-app2.herokuapp.com/api/contacts/${_id}`;
+            let token = window.localStorage.getItem('token')
+              let _data = this.contact
+              fetch(URL, {
+                  method:"DELETE",  
+                    body:  JSON.stringify(_data), 
+                  mode: 'cors',
+                  headers: {
+                      'Content-Type': 'application/json',
+                      "x-auth-token": token
+                  }
+              })
+              .then(response => response.json())
+                  .then(json => {
+                      console.log('json->', json );
+                      
+                  })
+                  .catch(err => console.log('err->',err))
+      },
+    logOut : function(){
+        window.localStorage.removeItem('token')
+        this.$router.push('/')
+    },
+    },
+    created : function(){
+     
+    },
+    mounted : function(){
+      this.getContacts()
     }
 }
 </script>

@@ -37,6 +37,7 @@ export default {
   align-items : center;
   justify-content : center;
   background: #2c3e50;
+  background-size: cover;
 }
 .ui {
   background: #2c3e50;
