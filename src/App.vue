@@ -26,11 +26,13 @@ export default {
   align-items: center;
   color: #fff;
   background: #2c3e50;
+  height: 100%;
+  background-size: cover;
 }
 template{
   margin: 10 auto;
   background: #2c3e50;
   background-size: cover;
-  height: 100%;
+ 
 }
 </style>

@@ -83,8 +83,7 @@ export default {
                 }
             })
             .then(response => response.json())
-                .then(
-                  json => {
+                .then(json => {
                   console.log('json->', json);
                 }
                 )

@@ -4,7 +4,7 @@
         <sui-button class="right floated" color="green" v-on:click="logOut"> Sign-out</sui-button>
   </div>
     <div class="ui cards" >
-       <div class="card" v-for="(person,index) in contacts" :key="index">    
+       <div class="card" v-for="(person,index) in contacts" :key="index" person.id={update}>    
           <div class="content">
             <i class="user icon right floated"></i>
             <div class="header">
@@ -21,20 +21,20 @@
           </div>
           <div class="extra content">
             <div class="ui two buttons">
-              <sui-button class="ui basic blue button" @click.native="toggle">
+              <sui-button class="ui basic blue button" @click.native="toggle" v-on:click='update =  person._id'> 
                 <i class="pencil icon"></i>
                 Update</sui-button>
-              <div class="ui basic red button" v-on:click="deleteContact">
-                <i class="trash alternate icon"></i> Delete</div>
+              <sui-button class="ui basic red button" v-on:click="deleteContact(person._id)" >
+                <i class="trash alternate icon"></i> Delete</sui-button>
             </div>
           </div>
       </div>
   <div> 
 </div>
   <sui-modal v-model="open">
-        <form class="ui form">
+        <form class="ui form" >
                 <div class=" field">
-                    <label>Full Name</label>
+                    <label>Full Name: {{contact.name}}</label>
                     <input v-model="contact.name" type="text" name="name" placeholder="Name">
                 </div>
                 <div class="field">
@@ -49,7 +49,7 @@
                             <label>Type</label>
                             <input v-model="contact.type" type="text" name="professional" placeholder="personal /professional">
                     </div>
-                <button class="ui positive  button" type="button" v-on:click="updateContact">Save</button>
+                <button class="ui positive  button" type="button" v-on:click="updateContact(update)">Save</button>
             </form>
             
       </sui-modal>
@@ -63,6 +63,7 @@ export default {
       return {
         open : false,
         contacts : [],
+        update : '',
         contact: {name : "",
       phone : "",
       email : "",
@@ -128,7 +129,7 @@ export default {
               .then(response => response.json())
                   .then(json => {
                       console.log('json->', json );
-                      
+                      this.getContacts()
                   })
                   .catch(err => console.log('err->',err))
       },
