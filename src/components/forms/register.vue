@@ -81,6 +81,7 @@ export default {
             .then(response => response.json())
                 .then(json => {
                     console.log('json->', json);
+                    window.localStorage.setItem('token', json.token)
                     this.$router.push('/user')
                 })
               .catch(err => console.log('err->',err))
