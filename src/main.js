@@ -4,6 +4,7 @@ import 'semantic-ui-css/semantic.min.css'
 import Routes from './components/routes'
 import SuiVue from 'semantic-ui-vue'
 import App from './App.vue'
+import './registerServiceWorker'
 
 Vue.use(SuiVue)
 Vue.use(VueRouter)

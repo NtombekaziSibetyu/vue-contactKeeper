@@ -23,12 +23,19 @@
             </span>
           </div>
         </div>
-      <sui-button circular color="teal" @click.native="toggle">
-        create
+      <sui-button circular animated color="teal" @click.native="toggle">
+        <sui-button-content visible>
+          <sui-icon name="add user" />
+         </sui-button-content>
+        <sui-button-content hidden>
+          create
+        </sui-button-content>
       </sui-button>
       <sui-modal v-model="open">
-        <form class="ui form">
-               <h1>Create new contact</h1>
+        <sui-modal-header>Create new contact</sui-modal-header>
+        <sui-modal-content>
+           <form class="ui form">
+               
                 <div class="required field">
                     <label>Full Name</label>
                     <input v-model="contact.name" type="text" name="name" placeholder="Name">
@@ -41,14 +48,16 @@
                     <label>Phone</label>
                     <input v-model="contact.phone" type="text" name="first-name" placeholder="+27123456789">
                 </div>
-        
                     <div class="field">
                             <label>Type</label>
                             <input v-model="contact.type" type="text" name="professional" placeholder="personal /professional">
                     </div>
-                <button class="ui positive  button" type="button" v-on:click="addContact">Save</button>
+                
             </form>
-            
+        </sui-modal-content>
+        <sui-modal-actions>
+          <sui-button class="ui positive  button" type="button" v-on:click="addContact"  @click.native="toggle">Save</sui-button>
+        </sui-modal-actions>
       </sui-modal>
 </div>
 </template>

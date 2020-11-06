@@ -1,7 +1,7 @@
 <template>
 <div class='contacts' >
   <div class="inline fields">
-        <sui-button class="right floated" color="green" v-on:click="logOut"> Sign-out</sui-button>
+        <sui-button class="right floated" color="green" v-on:click="logOut"> Sign-out <sui-icon name="right arrow" /></sui-button>
   </div>
     <div class="ui cards" >
        <div class="card" v-for="(person,index) in contacts" :key="index" person.id={update}>    
@@ -22,17 +22,20 @@
           <div class="extra content">
             <div class="ui two buttons">
               <sui-button class="ui basic blue button" @click.native="toggle" v-on:click='update =  person._id'> 
-                <i class="pencil icon"></i>
+                <i class="edit icon"></i>
                 Update</sui-button>
               <sui-button class="ui basic red button" v-on:click="deleteContact(person._id)" >
-                <i class="trash alternate icon"></i> Delete</sui-button>
+                <i class="trash alternate icon"></i> Delete
+              </sui-button>
             </div>
           </div>
       </div>
   <div> 
 </div>
   <sui-modal v-model="open">
-        <form class="ui form" >
+    <sui-modal-header>Update your contact</sui-modal-header>
+    <sui-modal-content>
+      <form class="ui form" >
                 <div class=" field">
                     <label>Full Name: {{contact.name}}</label>
                     <input v-model="contact.name" type="text" name="name" placeholder="Name">
@@ -49,10 +52,13 @@
                             <label>Type</label>
                             <input v-model="contact.type" type="text" name="professional" placeholder="personal /professional">
                     </div>
-                <button class="ui positive  button" type="button" v-on:click="updateContact(update)">Save</button>
-            </form>
+            </form> 
+    </sui-modal-content>
+        <sui-modal-actions>
+              <sui-button class="ui positive  button" @click.native="toggle"  v-on:click="updateContact(update)">Save</sui-button>
+            </sui-modal-actions>
             
-      </sui-modal>
+    </sui-modal>
 </div>
 </div>
 </template>
@@ -129,17 +135,18 @@ export default {
               .then(response => response.json())
                   .then(json => {
                       console.log('json->', json );
+                      alert('Contact deleted')
                       this.getContacts()
                   })
                   .catch(err => console.log('err->',err))
       },
     logOut : function(){
-        window.localStorage.removeItem('token')
-        this.$router.push('/')
+        window.localStorage.removeItem('token');
+        this.$router.push('/');
     },
     },
     created : function(){
-     
+     this.getContacts()
     },
     mounted : function(){
       this.getContacts()
@@ -152,6 +159,7 @@ export default {
 }
 .ui .cards {
 margin : 10px;
+display: flex;
 }
 #i{
   color: blue;
